@@ -250,10 +250,10 @@ public class FriendServlet extends BaseServlet {
     //************************************以下是群聊部分*********************************
     public void getAllFriends(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         System.out.println("群聊添加好友");
-        String friend_id = req.getParameter("friend_id");
+        String friend_id = req.getParameter("username");
 
-
-        List<User> friendsList = friendService.getFriendsList(conn, "haojia");
+        System.out.println(friend_id);
+        List<User> friendsList = friendService.getFriendsList(conn, friend_id);
 
 
         Gson gson = new Gson();

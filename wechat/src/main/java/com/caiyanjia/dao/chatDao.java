@@ -14,8 +14,6 @@ public interface chatDao {
      */
     public Boolean sava_msg(Connection conn, Msg msg);
 
-//    public Boolean get_msg(Connection conn,String to);
-
     public void ChangeMsgState(Connection conn,String to,String from);
 
     public long getUnreadMsgCount(Connection conn,String to,String from);

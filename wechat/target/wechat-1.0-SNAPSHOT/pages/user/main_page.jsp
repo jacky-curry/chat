@@ -54,12 +54,6 @@
     </ul>
   </div>
 
-<%--  <div class="layui-side layui-bg-black">--%>
-<%--    <div class="layui-side-scroll">--%>
-<%--      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->--%>
-<%--          <iframe id="side_frame" name="side_frame" class="layui-side"></iframe>--%>
-<%--    </div>--%>
-<%--  </div>--%>
   <div class="layui-body" style="width: 1360px "   >
     <!--                     内容主体区域                       -->
     <div style="">　

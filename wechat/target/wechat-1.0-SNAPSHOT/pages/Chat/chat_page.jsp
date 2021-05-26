@@ -118,7 +118,7 @@
 
         //判断是群聊天还是私聊
         if (current_username != null) {
-
+            // alert("发送私聊消息")
             var message = $("#messageInput").val();
             // alert(message);
             // alert("这里是发送的");
@@ -184,32 +184,27 @@
     function showFriendsList(username) {//图片暂时还不知道要怎么弄
         var friendItem = '<li class="active" >'
             + '<img class="avatar" src="static/img/avatar1.png" width="40" height="40">'
-            + ' <p class="name" id="' + username + '" onclick="pOnclick()" >' + username + '<span class="msg_Tip" id="' + username + "_tip" + '" style="display:none" > </span></p>'
+            + ' <p class="name2" id="' + username + '" onclick="pOnclick()" >' + username + '<span class="msg_Tip" id="' + username + "_tip" + '" style="display:none" > </span></p>'
             + ' </li>'
 
         $(friendItem).appendTo('#f-list');
     }
 
     function pOnclick() {
-        alert("好友被点击了")
+        // alert("好友被点击了")
         $("#chat .sidebar .m-list #f-list li").on("click", "p", function () {
             //获取当前的用户username
             current_username = $(this).prop("id");
             //获取两个人之间的聊天记录
             //先清空聊天区
             $("#show-message").html("");
-
-            // alert("绑定了点击事件");
             //并按顺序显示
             GetHistoryMsg(current_username, "${sessionScope.user.username}");
-
             //将未读消息改为已读
             ChangeMsgState(current_username, login_username);
             //将前端的红点去掉
             $("#" + current_username + "_tip").css('display', 'none');
-            alert($('.m-message')[0].scrollHeight);
             $('.m-message').scrollTop($('.m-message')[0].scrollHeight);
-            // alert($(this).text());
         })
     }
 
@@ -260,16 +255,14 @@
             var login_user = "${sessionScope.user.username}";
             console.log(login_user)
             // var value = $("#b").val();
-            websocket = new WebSocket("ws://localhost:8080/wechat/websocket/" + _user);
+            websocket = new WebSocket("ws://localhost:8080/wechat/websocket/" + login_user);
             //连接发生错误的回调方法
             websocket.onerror = function (ev) {
                 console.log(ev);
-                // setMessageInnerHTML("WebSocket连接发生错误");
             };
 
             //连接成功建立的回调方法
             websocket.onopen = function () {
-                // setMessageInnerHTML("WebSocket连接成功");
             }
 
             //接收到消息的回调方法
@@ -282,7 +275,6 @@
                 if (msg_obj.from === current_username.trim()) {
                     //添加进消息框
                     addMsg(msg_obj, 1);
-                    setMessageInnerHTML(event.data);
                     //将数据库中的消息状态改为已读
                     // alart("在当前聊天框");
                     ChangeMsgState(msg_obj.from, msg_obj.to);
@@ -365,10 +357,6 @@
     }
 
 
-    //将消息显示在网页上
-    function setMessageInnerHTML(innerHTML) {
-        document.getElementById('message').innerHTML += innerHTML + '<br/>';
-    }
 
     //关闭WebSocket连接
     function closeWebSocket() {
@@ -382,8 +370,6 @@
      * @param type 发送的信息则为0,接受到信息为其他
      */
     function addMsg(msg, type) {
-        // alert(msg);
-        // msg = JSON.parse(msg);
         let messageItem;
         const messageItem_self =
             '<li>'
@@ -550,7 +536,7 @@
             //清空聊天区
             $("#show-message").html("");
             //获取群聊的连接
-            connect(current_group);
+            connect_group(current_group);
             //显示历史该群的历史记录
             showGroupHistoryMsg();
         });
@@ -588,7 +574,7 @@
 
     }
 
-    function connect(group_id) {
+    function connect_group(group_id) {
         //判断当前浏览器是否支持WebSocket
         if ('WebSocket' in window) {
             var ro_user = group_id + "_" + "${sessionScope.user.username}";

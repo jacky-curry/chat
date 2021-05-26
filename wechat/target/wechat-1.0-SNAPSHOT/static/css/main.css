@@ -96,6 +96,12 @@ body, ul{
     font-size: 14px;
     width: 150px;
 }
+.name2{
+    display: inline-block;
+    margin-left: 15px;
+    font-size: 14px;
+    width: 150px;
+}
 .m-card footer{
     margin-top: 10px;
 }

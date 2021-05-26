@@ -25,18 +25,17 @@
         </div>
     </div>
 
-    <table class="layui-table" lay-data="{height:315, url:'FriendServlet?action=getAllFriends', page:false, id:'test'}" lay-filter="create">
+    <table class="layui-table" id="group_member" lay-data="{id:'test'}" lay-filter="create">
         <thead>
         <tr>
             <th lay-data="{field:'username', width:80}">好友id</th>
-<%--            <th lay-data="{fixed: 'right', width:150, align:'center', toolbar: '#barDemo'}"></th>--%>
             <th lay-data="{type:'checkbox'}">ID</th>
         </tr>
         </thead>
     </table>
 
     <div class="layui-form-item">
-            <button type="submit" class="layui-btn" lay-submit="" lay-filter="pass_sub">立即提交</button>
+            <button type="submit" class="layui-btn" lay-filter="pass_sub">立即提交</button>
     </div>
 </form>
 <%--
@@ -64,11 +63,13 @@
 
 --%>
 <script>
+    $(function () {
         layui.use(['table', 'layer','form'], function() {
             var table = layui.table;
             var layer = layui.layer;
             var form = layui.form;
 
+            reloadList(table);
             table.on('checkbox(test)',function (obj) {
                 var checkStatus = table.checkStatus('test');
                 // console.log(checkStatus.data);
@@ -100,7 +101,6 @@
                             }
                         })
 
-
                         layer.close(index);
                     });
                 } else  {
@@ -110,7 +110,23 @@
                 return false;
             });
         });
+    })
+
+
+
+        function reloadList(table){
+            table.reload('test',{
+                elem: '#group_member' //指定原始表格元素选择器（推荐id选择器）
+                ,height: 315 //容器高度
+                ,url: `FriendServlet?action=getAllFriends&username=`+"${sessionScope.user.username}",
+                title:"成员选择列表"
+            });
+        }
+
+
 </script>
+
+
 
 </body>
 </html>
